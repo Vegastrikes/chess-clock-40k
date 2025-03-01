@@ -8,12 +8,6 @@ export default function MainMenu({
 }) {
   function onStartHandler() {
     console.log("Game starting: ", GameState)
-    if (!GameState.p1.username) {
-      GameState.p1.username = "player1"
-    }
-    if (!GameState.p2.username) {
-      GameState.p2.username = "player2"
-    }
     GameState.step = "game";
     setGameStepHandler("game");
   }

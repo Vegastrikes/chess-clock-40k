@@ -7,6 +7,13 @@ interface PlayerSettings {
   username?: string;
   hour?: number;
   minute?: number;
+  second?: number;
+}
+
+const defaultSettings: PlayerSettings = {
+  hour: 2,
+  minute: 30,
+  second: 0
 }
 
 class GameState {
@@ -14,7 +21,10 @@ class GameState {
   private static instance: GameState;
   public static getInstance(): GameState {
     if (!GameState.instance) {
-      GameState.instance = new GameState({p1: {}, p2: {}});
+      GameState.instance = new GameState({
+        p1: {...defaultSettings, username: "player1"},
+        p2: {...defaultSettings, username: "player2"}
+      });
     }
     return GameState.instance;
   }
