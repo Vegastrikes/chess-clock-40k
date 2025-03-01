@@ -1,13 +1,10 @@
-function Name () {
+export default function Game() {
   return (
-    <div className="name absolute bottom-0 w-2/3 bg-red-300 rounded-md">Player Name</div>
-  )
-}
-
-function Clock () {
-  return (
-    <div className="clock h-1/3 w-1/3 bg-gray-500">
-      Clock
+    <div className="game w-full h-dvh">
+      <div className="players grid grid-cols-2 h-100">
+        <PlayerArea testBg="bg-green-500"/>
+        <PlayerArea />
+      </div>
     </div>
   )
 }
@@ -23,13 +20,16 @@ function PlayerArea({
   )
 }
 
-export default function Game() {
+function Clock () {
   return (
-    <div className="game w-full h-dvh">
-      <div className="players grid grid-cols-2 h-100">
-        <PlayerArea testBg="bg-green-500"/>
-        <PlayerArea />
-      </div>
+    <div className="clock h-1/3 w-1/3 bg-gray-500">
+      Clock
     </div>
+  )
+}
+
+function Name () {
+  return (
+    <div className="name absolute bottom-0 w-2/3 bg-red-300 rounded-md">Player Name</div>
   )
 }
