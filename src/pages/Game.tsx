@@ -6,7 +6,7 @@ const PlayerContext = createContext(GameState.player1)
 export default function Game() {
   return (
     <div className="game w-full h-dvh">
-      <div className="players grid grid-cols-2 h-100">
+      <div className="players grid grid-cols-2 h-full">
         <PlayerContext.Provider value={GameState.player1}>
           <PlayerArea testBg="bg-green-500"/>
         </PlayerContext.Provider>
@@ -40,13 +40,19 @@ function Clock () {
     };
   }, []);
 
+  function formatTwoDigit(value: number) {
+    if (value < 10 && value >= 0) {
+        return `0${value}`;
+    }
+
+    return `${value}`
+}
+
   return (
-    <div className="clock h-1/3 w-1/3 flex justify-center items-center bg-gray-500">
-      <div className="w-1/3 text-center">{player.clock.getTime("hour")}</div>
-      <div className="w-1/3 text-center">{player.clock.getTime("minute")}</div>
-      <div className="w-1/3 text-center">{player.clock.getTime("second")}</div>
-      <button onClick={() => player.clock.start()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Start Test</button>
-      <button onClick={() => player.clock.stop()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Stop Test</button>
+    <div className="clock h-1/3 w-2/3 flex justify-center items-center bg-gray-500">
+      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("hour"))}</div>
+      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("minute"))}</div>
+      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("second"))}</div>
     </div>
   )
 }
