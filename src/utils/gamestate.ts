@@ -7,7 +7,7 @@ class GameState {
   public static getInstance(): GameState {
     if (!GameState.instance) {
       GameState.instance = new GameState({
-        player1: {username: "player1", clock: new Clock({hour: 2, minute: 30, second: 0})},
+        player1: {username: "player1", clock: new Clock({hour: 0, minute: 0, second: 2})},
         player2: {username: "player2", clock: new Clock({hour: 2, minute: 30, second: 0})}
       });
     }

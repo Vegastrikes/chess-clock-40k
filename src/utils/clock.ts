@@ -23,6 +23,9 @@ class Clock {
   }
 
   public start() {
+    if (this.isFinished) {
+      return;
+    }
     this.isRunning = true;
     this.countdownHandler = setInterval(() => { this.handleCountdown() }, 1000)
   }
