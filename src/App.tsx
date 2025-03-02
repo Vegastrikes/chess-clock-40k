@@ -3,7 +3,7 @@ import { useState } from "react"
 import Game from './pages/Game'
 import MainMenu from './pages/MainMenu'
 
-import GameState from './gamestate';
+import GameState from './utils/gamestate';
 
 export default function App() {
   const [gameStep, setGameStep] = useState('settings')

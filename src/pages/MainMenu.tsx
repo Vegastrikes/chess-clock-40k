@@ -1,36 +1,35 @@
 import { useState, createContext, useContext } from "react"
-import GameState from '../gamestate';
+import GameState from '../utils/gamestate';
 
-const PlayerContext = createContext('p1')
+const PlayerContext = createContext(GameState.player1)
 
 export default function MainMenu({
   setGameStepHandler = (v:string) => {}
 }) {
   function onStartHandler() {
-    console.log("Game starting: ", GameState)
-    GameState.step = "game";
+    GameState.start();
     setGameStepHandler("game");
   }
 
   return (
     <div className="mainmenu w-full h-dvh">
       <div className="grid grid-cols-3 h-dvh place-items-center">
-        <PlayerContext.Provider value="p1">
-          <PlayerSettings />
+        <PlayerContext.Provider value={GameState.player1}>
+          <Settings />
         </PlayerContext.Provider>
         <button onClick={onStartHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Start</button>
-        <PlayerContext.Provider value="p2">
-          <PlayerSettings />
+        <PlayerContext.Provider value={GameState.player2}>
+          <Settings />
         </PlayerContext.Provider>
       </div>
     </div>
   )
 }
 
-function PlayerSettings() {
+function Settings() {
   const player = useContext(PlayerContext)
   function inputChangeHandler(username: string) {
-    GameState[player].username = username;
+    player.username = username;
   }
   return (
     <div className="bg-gray-200 w-4/5 h-4/5">
@@ -44,8 +43,8 @@ function PlayerSettings() {
 function TimeSettings() {
   return (
     <div className="flex m-4">
-      <TimeSlot defaultValue={2} type="hour"/>
-      <TimeSlot defaultValue={30} type="minute"/>
+      <TimeSlot type="hour" />
+      <TimeSlot type="minute" />
       {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Change style</button> */}
     </div>
   )
@@ -53,12 +52,11 @@ function TimeSettings() {
 
 function TimeSlot({
   type = "",
-  defaultValue = 2
 }) {
   const player = useContext(PlayerContext)
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(player.clock.getTime(type));
 
-  GameState[player][type] = value
+  player.clock.setTime(type, value);
   
   function onChangeHandler(v: string) {
     let r: number = parseInt(v);
@@ -72,7 +70,6 @@ function TimeSlot({
     }
     
     setValue(r);
-    GameState[player][type] = r
   }
 
   return (
