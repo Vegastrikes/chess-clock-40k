@@ -46,20 +46,31 @@ function Clock () {
     }
 
     return `${value}`
-}
+  }
 
   return (
-    <div className="clock h-1/3 w-2/3 flex justify-center items-center bg-gray-500">
-      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("hour"))}</div>
-      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("minute"))}</div>
-      <div className="w-1/3 text-center">{formatTwoDigit(player.clock.getTime("second"))}</div>
+    <div className="clock w-2/3 flex justify-center items-center bg-gray-500"  style={{fontFamily: "Digital-7"}}>
+      <div className="w-1/3 text-center text-8xl">{formatTwoDigit(player.clock.getTime("hour"))}</div>
+      <div className="w-1/3 text-center text-8xl">{formatTwoDigit(player.clock.getTime("minute"))}</div>
+      <div className="w-1/3 text-center text-8xl">{formatTwoDigit(player.clock.getTime("second"))}</div>
     </div>
   )
 }
 
 function Name () {
   const player = useContext(PlayerContext)
+  console.log(player.username, player.getTurn())
+  // const textSize = player.isTurn ? "text-6xl" : "text-2xl";
+  const [textSize, setTextSize] = useState("text-2xl")
+
+  useEffect(() => {
+    if (player.getTurn()) {
+      setTextSize("text-6xl");
+    } else {
+      setTextSize("text-2xl");
+    }
+  }, [player])
   return (
-    <div className="name absolute bottom-0 w-2/3 text-center bg-red-300 rounded-md">{player.username}</div>
+    <div className={`name absolute bottom-10 w-1/2 text-center bg-red-300 rounded-md p-6 ${textSize}`}>{player.username}</div>
   )
 }

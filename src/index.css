@@ -69,6 +69,11 @@ button:focus-visible {
 
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Digital-7";
+  src: url("./assets/digital-7/digital-7.ttf");
+}
+
 #root {
   width: 100%;
 }

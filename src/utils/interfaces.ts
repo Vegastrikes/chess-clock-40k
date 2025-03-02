@@ -1,14 +1,8 @@
-import Clock from './clock';
+import Player from './player';
 
 interface GameSettings {
   player1: Player;
   player2: Player;
-}
-
-interface Player {
-  [key:string]: any;
-  username: string;
-  clock: Clock;
 }
 
 interface Time {
@@ -20,6 +14,5 @@ interface Time {
 
 export {
   type GameSettings,
-  type Player,
   type Time
 }

@@ -35,6 +35,14 @@ class Clock {
     clearInterval(this.countdownHandler);
   }
 
+  public startStop() {
+    if (this.isRunning) {
+      this.stop();
+    } else {
+      this.start();
+    }
+  }
+
   private handleCountdown() {
     const t = this.time;
 

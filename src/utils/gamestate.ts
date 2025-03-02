@@ -1,5 +1,5 @@
-import { GameSettings, Player } from "./interfaces";
-import Clock from './clock';
+import { GameSettings } from "./interfaces";
+import Player from "./player";
 
 class GameState {
   [key:string]: any;
@@ -7,65 +7,52 @@ class GameState {
   public static getInstance(): GameState {
     if (!GameState.instance) {
       GameState.instance = new GameState({
-        player1: {username: "player1", clock: new Clock({hour: 2, minute: 30, second: 0})},
-        player2: {username: "player2", clock: new Clock({hour: 2, minute: 30, second: 0})}
+        player1: new Player("player1"),
+        player2: new Player("player2")
       });
     }
     return GameState.instance;
   }
 
   step: string;
-  turn: number;
-  pausedOnTurn: number;
+  isPaused: boolean;
   player1: Player;
   player2: Player;
 
   private constructor(gameSettings: GameSettings) {
     this.step = "settings";
-    this.turn = 1;
-    this.pausedOnTurn = 0;
+    this.isPaused = true;
     this.player1 = gameSettings.player1;
     this.player2 = gameSettings.player2;
   }
 
   public start() {
     this.step = "game";
+    this.player1.setTurn(true);
     this.player1.clock.start();
+    this.isPaused = false;
   }
 
   public changeTurn() {
-    if (this.turn === 1) {
-      this.player1.clock.stop();
-      this.player2.clock.start();
-      this.turn = 2;
-      return;
-    }
-    if (this.turn === 2) {
-      this.player2.clock.stop();
-      this.player1.clock.start();
-      this.turn = 1;
-    }
+    this.player1.changeTurn();
+    this.player2.changeTurn();
   }
 
   public pauseUnpause() {
     // Pause
-    if (this.turn > 0) {
-      this.pausedOnTurn = this.turn;
+    if (!this.isPaused) {
+      this.isPaused = true;
       this.player1.clock.stop();
       this.player2.clock.stop();
-      this.turn = 0;
       return;
     }
 
     // Unpause
-    this.turn = this.pausedOnTurn;
-    this.pausedOnTurn = 0;
-
-    if (this.turn === 1) {
+    this.isPaused = false;
+    if (this.player1.getTurn()) {
       this.player1.clock.start();
     }
-
-    if (this.turn === 2) {
+    if (this.player2.getTurn()) {
       this.player2.clock.start();
     }
   }
