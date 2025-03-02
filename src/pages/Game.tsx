@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react"
+import { useState, useEffect, createContext, useContext } from "react"
 import GameState from '../utils/gamestate';
 
 const PlayerContext = createContext(GameState.player1)
@@ -31,11 +31,22 @@ function PlayerArea({
 
 function Clock () {
   const player = useContext(PlayerContext)
+
+  const [time, setTime] = useState(Date.now());
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+        clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div className="clock h-1/3 w-1/3 flex justify-center items-center bg-gray-500">
       <div className="w-1/3 text-center">{player.clock.getTime("hour")}</div>
       <div className="w-1/3 text-center">{player.clock.getTime("minute")}</div>
       <div className="w-1/3 text-center">{player.clock.getTime("second")}</div>
+      <button onClick={() => player.clock.start()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Start Test</button>
+      <button onClick={() => player.clock.stop()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Stop Test</button>
     </div>
   )
 }

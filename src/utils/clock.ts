@@ -33,7 +33,32 @@ class Clock {
   }
 
   private handleCountdown() {
-    console.log('counting...')
+    const t = this.time;
+
+    if (t.second > 0) {
+      t.second -= 1;
+      return;
+    }
+
+    if (t.minute > 0) {
+      t.minute -= 1;
+      t.second = 59;
+      return;
+    }
+
+    if (t.hour > 0) {
+      t.hour -= 1;
+      t.minute = 59;
+      t.second = 59;
+      return;
+    }
+
+    this.finish()
+  }
+
+  private finish() {
+    this.stop();
+    this.isFinished = true;
   }
 }
 
