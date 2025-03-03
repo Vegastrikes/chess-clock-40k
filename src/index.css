@@ -72,6 +72,7 @@ button:focus-visible {
 @font-face {
   font-family: "Digital-7";
   src: url("./assets/digital-7/digital-7.ttf");
+  ascent-override: 50%;
 }
 
 #root {

@@ -7,8 +7,8 @@ class GameState {
   public static getInstance(): GameState {
     if (!GameState.instance) {
       GameState.instance = new GameState({
-        player1: new Player("player1"),
-        player2: new Player("player2")
+        player1: new Player("Player1"),
+        player2: new Player("Player2")
       });
     }
     return GameState.instance;
@@ -36,9 +36,11 @@ class GameState {
   public changeTurn() {
     this.player1.changeTurn();
     this.player2.changeTurn();
+    document.dispatchEvent(new CustomEvent('changeTurn'))
   }
 
   public pauseUnpause() {
+    document.dispatchEvent(new CustomEvent('pauseUnpause'))
     // Pause
     if (!this.isPaused) {
       this.isPaused = true;

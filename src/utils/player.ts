@@ -4,8 +4,9 @@ class Player {
     [key:string]: any;
 
     username: string;
+    faction!: number;
     clock: Clock;
-    private turn: boolean;
+    turn: boolean;
     constructor(username: string) {
         this.username = username || "default";
         this.clock = new Clock({hour: 2, minute: 30, second: 0});
